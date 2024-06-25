@@ -1,0 +1,9 @@
+ultralytics~=8.2.22
+PyGetWindow~=0.0.9
+pyautogui~=0.9.54
+opencv-python~=4.9.0
+numpy~=1.26.4
+pynput~=1.7.7
+pydirectinput~=1.0.4
+mss~=9.0.1
+
