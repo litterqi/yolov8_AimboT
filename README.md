@@ -1,7 +1,7 @@
 # yolov8_AimboT
 
 ## 第一步
-根据requirements.txt安装需要的依赖包。
+根据[requirements.txt](https://github.com/litterqi/yolov8_AimboT/blob/main/requirements.txt)安装需要的依赖包。
 
 ## 第二步
 根据自身电脑所最高支持的cuda版本安装cuda。[cuda官网](https://developer.nvidia.com/cuda-toolkit)
