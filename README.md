@@ -1,3 +1,14 @@
 # yolov8_AimboT
-AI基础大作业
-coming soon
+
+## 第一步
+根据requirements.txt安装需要的依赖包。
+
+## 第二步
+根据自身电脑所最高支持的cuda版本安装cuda。[cuda官网](https://developer.nvidia.com/cuda-toolkit)
+
+安装pytorch，根据需求选择安装CPU版（大小为100MB）还是GPU版（大小为2G以上）。[pytorch官网](https://pytorch.org/)
+
+## 第三步
+启动csgo。若安装的是GPU版的pytorch请运行gpu_run.py文件，若是CPU版的pytorch请运行cpu_run.py文件。
+
+（如果是国服csgo，请运行gpu_run_china.py或cpu_run_china.py）。
