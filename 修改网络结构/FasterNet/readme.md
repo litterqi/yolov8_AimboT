@@ -1,4 +1,4 @@
-[论文]([https://arxiv.org/abs/2303.03667](https://github.com/litterqi/yolov8_AimboT/blob/main/%E4%BF%AE%E6%94%B9%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84/FasterNet/fasterNet.pdf))
+![image](https://github.com/litterqi/yolov8_AimboT/assets/123362884/1f6f4b52-2f19-4769-8882-1b2d83cafc83)[论文](https://github.com/litterqi/yolov8_AimboT/blob/main/%E4%BF%AE%E6%94%B9%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84/FasterNet/fasterNet.pdf)
 
 ![image](https://github.com/litterqi/yolov8_AimboT/assets/123362884/6ece2d8f-5f3c-4e3b-80c7-4d908b441873)
 
@@ -9,3 +9,7 @@
 ![image](https://github.com/litterqi/yolov8_AimboT/assets/123362884/709016f1-201b-46e3-933b-9fe9d627302f)
 
 整体架构有4个层级，层次级前面都有一个嵌入层或一个合并层。每个阶段都使用FasterNet Block进行计算。每个FasterNet Block有一个PConv层，后跟2个1*1的Conv层。
+
+![image](https://github.com/litterqi/yolov8_AimboT/assets/123362884/e0a4fa7c-df8d-40d5-bb56-3c5e7b247ad8)
+
+FasterNet降低了一定的延迟，FLOPS（每秒浮点运算次数）的效率也有提高。
