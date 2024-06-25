@@ -9,7 +9,7 @@
 安装pytorch，根据需求选择安装CPU版（大小为100MB）还是GPU版（大小为2G以上）。[pytorch官网](https://pytorch.org/)
 
 ## 第三步
-下载best.pt
+下载[best.pt](https://github.com/litterqi/yolov8_AimboT/blob/main/best.pt)
 
 之后AimboT须在best.pt下载的路径下运行
 
