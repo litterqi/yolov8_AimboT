@@ -1,4 +1,4 @@
-[论文地址](https://arxiv.org/abs/2303.03667)
+[论文](https://arxiv.org/abs/2303.03667)
 
 ![image](https://github.com/litterqi/yolov8_AimboT/assets/123362884/6ece2d8f-5f3c-4e3b-80c7-4d908b441873)
 
