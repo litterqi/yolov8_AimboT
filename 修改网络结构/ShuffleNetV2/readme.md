@@ -1,3 +1,5 @@
+[论文](https://github.com/litterqi/yolov8_AimboT/blob/main/%E4%BF%AE%E6%94%B9%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84/ShuffleNetV2/ShuffleNetV2.pdf)
+
 ![image](https://github.com/litterqi/yolov8_AimboT/assets/123362884/442ae9ab-dfe4-4c45-821f-a7f34eeac7a1)
 
 论文指出用间接指标FLOPs来衡量模型架构速度是不全面的。在两个硬件平台上测量四种网络结构的准确性（验证集上的ImageNet分类）、速度和FLOPs，性能最好的算法，即ShuffleNetv2都在右上角的区域。
