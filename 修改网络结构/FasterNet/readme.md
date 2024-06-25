@@ -1,4 +1,4 @@
-[论文](https://arxiv.org/abs/2303.03667)
+[论文]([https://arxiv.org/abs/2303.03667](https://github.com/litterqi/yolov8_AimboT/blob/main/%E4%BF%AE%E6%94%B9%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84/FasterNet/fasterNet.pdf))
 
 ![image](https://github.com/litterqi/yolov8_AimboT/assets/123362884/6ece2d8f-5f3c-4e3b-80c7-4d908b441873)
 
