@@ -14,6 +14,6 @@
 之后AimboT须在best.pt下载的路径下运行
 
 ## 第四步
-启动csgo。若安装的是GPU版的pytorch请运行gpu_run.py文件，若是CPU版的pytorch请运行cpu_run.py文件。
+启动csgo。若安装的是GPU版的pytorch请运行[gpu_run.py](https://github.com/litterqi/yolov8_AimboT/blob/main/runs/gpu_run.py)文件，若是CPU版的pytorch请运行cpu_run.py文件。
 
 （如果是国服csgo，请运行gpu_run_china.py或cpu_run_china.py）。
