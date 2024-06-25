@@ -1,3 +1,149 @@
 解释gpu_run.py的代码实现逻辑
 
 其它3个run.py文件与之非常类似
+
+```python
+from ultralytics import YOLO
+import pygetwindow as gw
+import pyautogui
+import cv2
+import numpy as np
+from pynput import keyboard
+import time
+import pydirectinput
+import torch
+import mss
+
+model = YOLO("best.pt")
+```
+调用所需的包，加载best.pt模型。
+
+```python
+window_title = "反恐精英：全球攻势"
+windows = gw.getWindowsWithTitle(window_title)
+if not windows:
+    raise Exception(f"无法找到名为'{window_title}'的游戏窗口")
+
+window = windows[0]
+```
+寻找名为"反恐精英：全球攻势"的窗口，选取找到的第1个窗口用来监视。
+
+```python
+mouse_move_enabled = False
+
+notification_text = ""
+notification_display_time = 2  
+notification_start_time = None
+
+def on_press(key):
+    global mouse_move_enabled, notification_text, notification_start_time
+    try:
+        if key.char == 't':
+            mouse_move_enabled = not mouse_move_enabled
+
+            notification_text = f"Mouse Move Enabled: {mouse_move_enabled}"
+            notification_start_time = time.time()
+            print(notification_text)
+    except AttributeError:
+        pass
+
+listener = keyboard.Listener(on_press=on_press)
+listener.start()
+```
+实现移动鼠标功能，这里设计成按下't'键以启动/终止该功能。
+
+每次按下t键就用notification_text记录当前移动鼠标功能的True/False，后续通过绘制背景框显示该信息。
+
+使用Keyboard.Listener监听键盘。
+
+```python
+while True:
+    start_time = time.time()
+
+    monitor = {"top": window.top, "left": window.left, "width": window.width, "height": window.height}
+    screenshot = sct.grab(monitor)
+
+    img = np.array(screenshot)
+
+    img = img[..., :3]
+
+    target_resolution = (480, 270)
+    img_resized = cv2.resize(img, target_resolution)
+ 
+    results = model(img_resized)
+
+    result = results[0]  
+```
+在while无限循环中，记录当前循环的开始时间start_time（后续用于控制循环频率），并截取当前游戏画面。
+
+为提高运行速度，降低截图的分辨率至(480, 270)。然后使用模型检测该图片，结果存在result中。
+
+```python
+for bbox in result.boxes.xyxy:
+        x1, y1, x2, y2 = map(int, bbox)
+ 
+        scale_x = window.width / target_resolution[0]
+        scale_y = window.height / target_resolution[1]
+        x1 = int(x1 * scale_x)
+        y1 = int(y1 * scale_y)
+        x2 = int(x2 * scale_x)
+        y2 = int(y2 * scale_y)
+
+        result_xyxy_cpu = result.boxes.xyxy.cpu()
+        bbox_cpu = bbox.cpu()
+
+        nonzero_idx = torch.nonzero(result_xyxy_cpu == bbox_cpu, as_tuple=False)
+
+        idx = nonzero_idx[0][0]
+
+        class_idx = int(result.boxes.cls[idx])
+
+        label = result.names[class_idx]
+
+        if label == 'ct_body':
+            mouse_x, mouse_y = pyautogui.position()
+
+            target_center_x = window.left + (x1 + x2) // 2
+            target_center_y = window.top + (y1 + y2) // 2
+
+            x_offset = target_center_x - mouse_x
+            y_offset = target_center_y - mouse_y
+
+            if mouse_move_enabled:
+                pydirectinput.moveRel(x_offset, y_offset, relative=True)
+            break  
+```
+
+for循环遍历检测到的目标，获得边框坐标并转换回原始分辨率。
+
+将CUDA张量移动到CPU，使用torch.nonzero()来找到符合条件的索引，使用该索引从result.boxes.cls中获取类别索引，最后获取名称。
+
+这里设置的是检测到的目标为"ct_body"，就将鼠标移动过去（也可以设置成"t_body"，"t_head"，"ct_head"）。
+
+```python
+detected_img = result.plot()
+
+scale_factor = 2
+detected_img = cv2.resize(detected_img, (int(detected_img.shape[1] * scale_factor), int(detected_img.shape[0] * scale_factor)))
+
+if notification_text and time.time() - notification_start_time < notification_display_time:
+    overlay = detected_img.copy()
+    cv2.rectangle(overlay, (10, 10), (350, 60), (0, 0, 0), -1)
+    alpha = 0.4  
+    cv2.addWeighted(overlay, alpha, detected_img, 1 - alpha, 0, detected_img)
+
+    cv2.putText(detected_img, notification_text, (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+
+cv2.imshow("YOLOv8 Detection on CS:GO", detected_img)
+
+if cv2.waitKey(1) & 0xFF == ord('q'):
+    break
+
+elapsed_time = time.time() - start_time
+sleep_time = max(0, 0.2 - elapsed_time)
+time.sleep(sleep_time)
+```
+
+绘制带有识别边框的游戏画面，并在设置的显示提示时间范围内绘制移动鼠标功能开关的信息框。
+
+同时利用前面记录的开始时间让程序sleep一小段时间，提升运行效果。
